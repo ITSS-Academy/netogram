@@ -22,10 +22,19 @@
           <h3>Avatar picture</h3>
           <div class="avatar-picture-container">
             <div class="avatar-wrapper">
-              <img [src]="profileForm.get('avatarPictureInfo')?.value?.previewUrl"
-                   alt="Avatar Picture"
-                   class="avatar-picture"
-                   *ngIf="profileForm.get('avatarPictureInfo')?.value?.previewUrl">
+
+              @if(profileForm.get('avatarPictureInfo')?.value?.previewUrl){
+                <img [src]="profileForm.get('avatarPictureInfo')?.value?.previewUrl"
+                     alt="Avatar Picture"
+                     class="avatar-picture"
+                    >
+              } @else {
+                <img src="{{profileMine.avatarUrl}}"
+                     alt="Avatar Picture"
+                     class="avatar-picture"
+                    >
+              }
+
             </div>
             <button mat-icon-button [matMenuTriggerFor]="avatarPictureMenu" class="avatar-menu-button">
               <mat-icon>more_vert</mat-icon>
@@ -42,21 +51,57 @@
         <!--Cover image-->
         <div class="photo-section">
           <h3>Cover photo</h3>
-          <div class="cover-photo-container">
-            <img [src]="profileForm.get('coverPhotoInfo')?.value?.previewUrl"
-                 alt="Cover Picture"
-                 class="cover-picture"
-                 *ngIf="profileForm.get('coverPhotoInfo')?.value?.previewUrl">
-            <button mat-icon-button [matMenuTriggerFor]="coverPhotoMenu">
-              <mat-icon>more_vert</mat-icon>
-            </button>
-            <mat-menu #coverPhotoMenu="matMenu">
-              <button mat-menu-item (click)="changeCoverPhoto()">
-                <mat-icon>edit</mat-icon>
-                <span>Change photo</span>
+
+          @if(profileForm.get('coverPhotoInfo')?.value?.previewUrl){
+            <div class="cover-photo-container">
+              <img [src]="profileForm.get('coverPhotoInfo')?.value?.previewUrl"
+                   alt="Cover Picture"
+                   class="cover-picture"
+              >
+              <button mat-icon-button [matMenuTriggerFor]="coverPhotoMenu">
+                <mat-icon>more_vert</mat-icon>
               </button>
-            </mat-menu>
-          </div>
+              <mat-menu #coverPhotoMenu="matMenu">
+                <button mat-menu-item (click)="changeCoverPhoto()">
+                  <mat-icon>edit</mat-icon>
+                  <span>Change photo</span>
+                </button>
+              </mat-menu>
+            </div>
+          } @else if (profileMine.coverUrl) {
+            <div class="cover-photo-container">
+              <img src="{{profileMine.coverUrl}}"
+                   alt="Cover Picture"
+                   class="cover-picture"
+              >
+              <button mat-icon-button [matMenuTriggerFor]="coverPhotoMenu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #coverPhotoMenu="matMenu">
+                <button mat-menu-item (click)="changeCoverPhoto()">
+                  <mat-icon>edit</mat-icon>
+                  <span>Change photo</span>
+                </button>
+              </mat-menu>
+            </div>
+          } @else {
+            <div class="cover-photo-container">
+              <img src="https://images.pexels.com/photos/2187304/pexels-photo-2187304.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                   alt="Cover Picture"
+                   class="cover-picture"
+              >
+              <button mat-icon-button [matMenuTriggerFor]="coverPhotoMenu">
+                <mat-icon>more_vert</mat-icon>
+              </button>
+              <mat-menu #coverPhotoMenu="matMenu">
+                <button mat-menu-item (click)="changeCoverPhoto()">
+                  <mat-icon>edit</mat-icon>
+                  <span>Change photo</span>
+                </button>
+              </mat-menu>
+            </div>
+          }
+
         </div>
 
         <!--Done button-->

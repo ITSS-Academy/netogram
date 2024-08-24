@@ -29,6 +29,29 @@ export class StorageEffects {
     );
   });
 
+
+  uploadFileCover$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(StorageActions.uploadFileCover),
+      switchMap((action) => {
+        return this.storageService
+          .uploadFileCover(action.file, action.fileName)
+          .pipe(
+            map((urlCover) => {
+              return StorageActions.uploadFileCoverSuccess({ urlCover: urlCover.urls });
+            }),
+            catchError((error) => {
+              return of(
+                StorageActions.uploadFileCoverFailure({
+                  uploadFileErrorMessage: error,
+                }),
+              );
+            }),
+          );
+      }),
+    );
+  });
+
   constructor(
     private actions$: Actions,
     private storageService: StorageService,

@@ -9,10 +9,7 @@
 
     <mat-card-title (click)="navigateToProfile()" class="username">{{ postUser.uid | idToName | async }}
     </mat-card-title>
-    <mat-card-subtitle (click)="navigateToProfile()" class="post-time">{{
-        postUser.createdAt | dateTranform
-      }}
-    </mat-card-subtitle>
+    <mat-card-subtitle (click)="navigateToProfile()" class="post-time">Dog Breed</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content class="content-post">
@@ -27,7 +24,10 @@
 
 
     <div class="carousel-images"
-         (click)="navigateToDetail()"
+         (mousedown)="onMouseDown($event, carousel)"
+         (mouseleave)="onMouseLeave()"
+         (mouseup)="onMouseUp()"
+         (mousemove)="onMouseMove($event, carousel)"
          #carousel>
       @for (image of postUser.imageUrls; track $index) {
         <img src="{{image}}"
@@ -42,19 +42,77 @@
 
 
   <mat-card-actions>
-    <button mat-button (click)="toggleFavorite(postUser)">
-      <mat-icon>{{ favoriteIcon }}</mat-icon>
-      LIKE
-    </button>
-    <button mat-button (click)="toggleShare()">
-      <mat-icon>{{ shareIcon }}</mat-icon>
-      SHARE
-    </button>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
   </mat-card-actions>
 </mat-card>
 
 
-<!--(mousedown)="onMouseDown($event, carousel)"-->
-<!--(mouseleave)="onMouseLeave()"-->
-<!--(mouseup)="onMouseUp()"-->
-<!--(mousemove)="onMouseMove($event, carousel)"-->
+<!--<div class="card-container">-->
+<!--  <div class="post-user-container">-->
+<!--    <img src="{{ postUser.uid | idToAvatar | async  }}" alt="Profile Picture" id="profile-pic"/>-->
+<!--    <div class="post-info">-->
+<!--      <span class="username">{{ postUser.uid | idToName | async }}</span>-->
+<!--      <span class="post-time">12</span>-->
+<!--    </div>-->
+<!--    <div class="post-options">-->
+<!--      <button mat-icon-button>-->
+<!--        <span class="material-symbols-outlined">more_horiz</span>-->
+<!--      </button>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--  <p id="post-caption">{{ postUser.content }}</p>-->
+
+<!--  <div class="carousel-container">-->
+<!--    <div class="carousel-button-prev" (click)="prevImage(carousel)">-->
+<!--      <mat-icon>chevron_left</mat-icon>-->
+<!--    </div>-->
+
+
+<!--    <div class="carousel-images"-->
+<!--         (mousedown)="onMouseDown($event, carousel)"-->
+<!--         (mouseleave)="onMouseLeave()"-->
+<!--         (mouseup)="onMouseUp()"-->
+<!--         (mousemove)="onMouseMove($event, carousel)"-->
+<!--         #carousel>-->
+<!--      @for (image of postUser.imageUrls; track $index) {-->
+<!--        <img src="{{image}}"-->
+<!--             class="post-image" draggable="false"-->
+<!--             (mousedown)="$event.preventDefault()"/>-->
+<!--      }-->
+<!--    </div>-->
+<!--    <div class="carousel-button-next" (click)="nextImage(carousel)">-->
+<!--      <mat-icon>chevron_right</mat-icon>-->
+<!--    </div>-->
+<!--  </div>-->
+
+
+<!--  <hr>-->
+<!--    (click)="navigateToDetail(i)"-->
+<!--      <div class="post-actions">-->
+<!--        <div class="on-post-actions">-->
+<!--          <button mat-button (click)="toggleFavorite(user)">-->
+<!--            <mat-icon [ngClass]="{'favorite': user.isLiked}">{{ user.isLiked ? 'favorite' : 'favorite_outlined' }}-->
+<!--            </mat-icon>-->
+<!--            {{ user.likes }} likes-->
+<!--          </button>-->
+<!--          <button mat-button>-->
+<!--            <mat-icon>{{ commentIcon }}</mat-icon>-->
+<!--            {{ user.comments }} comments-->
+<!--          </button>-->
+<!--          <button mat-button (click)="toggleShare()">-->
+<!--            <mat-icon>{{ shareIcon }}</mat-icon>-->
+<!--            {{ user.shares }} shares-->
+<!--          </button>-->
+<!--        </div>-->
+<!--        <div class="save-post-action">-->
+<!--          <button mat-icon-button (click)="toggleBookmark()">-->
+<!--            <mat-icon>{{ bookmarkIcon }}</mat-icon>-->
+<!--          </button>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--</div>-->
+
+
+
+

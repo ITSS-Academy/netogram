@@ -1,37 +1,47 @@
 <app-navbar></app-navbar>
 <div class="container">
   <router-outlet></router-outlet>
-<div class="body">
-  <div class="search-result">
-    <div>
-      <button id="backButton" (click)="goBack()" mat-fab>
-        <mat-icon>arrow_back</mat-icon>
-      </button>
-    </div>
-    <div class="everyone">
-        <h4>Everyone</h4>
-    </div>
-    <mat-card class="user-suggestions">
-      <mat-card-content>
-        <div *ngFor="let user of userResults" class="user-item">
-          <div class="user-info">
-            <img [src]="user.avatarUrl" [alt]="user.name" class="user-avatar">
-            <div class="user-details">
-              <div class="user-name">{{ user.name }}</div>
-              <div class="mutual-friends">{{ user.mutualFriends }} mutual friends</div>
+  <div class="body">
+    <div class="search-result">
+      <div>
+        <button id="backButton" (click)="goBack()" mat-fab>
+          <mat-icon>arrow_back</mat-icon>
+        </button>
+      </div>
+
+      <div>
+        <h5>Search results for "{{ searchTerm }}"</h5>
+      </div>
+
+      <div class="everyone">
+          <h5>Everyone</h5>
+      </div>
+      <mat-card class="user-suggestions" *ngIf="userResults.length > 0">
+        <mat-card-content>
+          <div *ngFor="let user of userResults" class="user-item">
+            <div class="user-info">
+              <img [src]="user.avatarUrl" [alt]="user.name" class="user-avatar">
+              <div class="user-details">
+                <div class="user-name">{{ user.name }}</div>
+                <div class="mutual-friends">{{ user.mutualFriends }} mutual friends</div>
+              </div>
             </div>
+            <button mat-flat-button class="add-friend-button">
+              <mat-icon>person_add_outlined</mat-icon>
+              Add friend
+            </button>
           </div>
-          <button mat-flat-button class="add-friend-button">
-            <mat-icon>person_add_outlined</mat-icon>
-            Add friend</button>
-        </div>
-      </mat-card-content>
-    </mat-card>
-    <div class="post">
-      <h4>Related post</h4>
+        </mat-card-content>
+      </mat-card>
+      <div class="post" *ngIf="postResults.length > 0">
+        <h5>Posts</h5>
+      </div>
+      <div *ngFor="let post of postResults">
+        <app-post ></app-post>
+      </div>
+      <div *ngIf="userResults.length === 0 && postResults.length === 0" class="no-results">
+        No results found for "{{ searchTerm }}".
+      </div>
     </div>
-    <app-post> </app-post>
   </div>
 </div>
-</div>
-

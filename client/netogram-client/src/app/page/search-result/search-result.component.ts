@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, RouterOutlet} from '@angular/router';
+import { ActivatedRoute, RouterOutlet } from '@angular/router';
 import { MatCard, MatCardContent } from "@angular/material/card";
 import { MatList, MatListItem } from "@angular/material/list";
-import {MatButton, MatFabButton} from "@angular/material/button";
-import {Location, NgForOf} from "@angular/common";
+import { MatButton, MatFabButton } from "@angular/material/button";
+import { Location, NgForOf, NgIf } from "@angular/common";
 import { PostComponent } from "../../components/post/post.component";
-import {NavbarComponent} from "../../components/navbar/navbar.component";
-import {MatIcon} from "@angular/material/icon";
-
+import { NavbarComponent } from "../../components/navbar/navbar.component";
+import { MatIcon } from "@angular/material/icon";
 
 interface UserResult {
   uid: string;
@@ -40,6 +39,7 @@ interface PostResult {
     MatListItem,
     MatButton,
     NgForOf,
+    NgIf,
     PostComponent,
     NavbarComponent,
     RouterOutlet,
@@ -56,8 +56,8 @@ export class SearchResultComponent implements OnInit {
   constructor(private route: ActivatedRoute, private location: Location) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      this.searchTerm = params['term'];
+    this.route.queryParams.subscribe(params => {
+      this.searchTerm = params['search'] || '';
       this.performSearch();
     });
   }
@@ -103,6 +103,7 @@ export class SearchResultComponent implements OnInit {
       },
     ];
   }
+
   goBack(): void {
     this.location.back();
   }

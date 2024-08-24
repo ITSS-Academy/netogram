@@ -1,7 +1,6 @@
 <div class="outercon">
   <div class="container">
-    <img id="hinh"
-         src="https://s3-alpha-sig.figma.com/img/c5a3/3479/c49de5e37183d320456e6f5439c3cd09?Expires=1724025600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=eMWpyqjm-b-tElZXg3RjuXMrPqD0e7ZwuX4W-e0NUh~UnW7vmMI7L0k6pLsq1P-ST-nni~gkrOB87XF~crQ7qxBgmftH35yXvIrTotg1rV7oafr6CbpaQf01wR3LfIv~Bb8PLPSc9MdF02sw5NT9FNBT0cetvtS5psQrhGBCBWt50Reu380Nd4xaKzNDiComyQ0-hILsNeq7rbWD~UzNjzjHvZAGva6fUwLOAYJiSoiu7wBi9fLUxGJkCsqLaXofDtEdT6v4pgcjfRLGsAcAez0nncoIJTkkcZg4stOec9Gc--EvkWimbIDbKDU5MC0uV~su1EA0OofO5dZmHoBhbA__">
+    <img id="hinh" src="https://s3-alpha-sig.figma.com/img/c5a3/3479/c49de5e37183d320456e6f5439c3cd09?Expires=1724025600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=eMWpyqjm-b-tElZXg3RjuXMrPqD0e7ZwuX4W-e0NUh~UnW7vmMI7L0k6pLsq1P-ST-nni~gkrOB87XF~crQ7qxBgmftH35yXvIrTotg1rV7oafr6CbpaQf01wR3LfIv~Bb8PLPSc9MdF02sw5NT9FNBT0cetvtS5psQrhGBCBWt50Reu380Nd4xaKzNDiComyQ0-hILsNeq7rbWD~UzNjzjHvZAGva6fUwLOAYJiSoiu7wBi9fLUxGJkCsqLaXofDtEdT6v4pgcjfRLGsAcAez0nncoIJTkkcZg4stOec9Gc--EvkWimbIDbKDU5MC0uV~su1EA0OofO5dZmHoBhbA__">
     <div id="text">
       <h2>Personal Information</h2>
     </div>
@@ -10,12 +9,12 @@
         <mat-label>Name</mat-label>
         <input
           matInput
-          formControlName="userName"
+          [formControl]="userName"
           (blur)="updateErrorMessage()"
           required
         />
         @if (userName.invalid) {
-          <mat-error>{{ errorMessage() }}</mat-error>
+          <mat-error>{{errorMessage()}}</mat-error>
         }
       </mat-form-field>
       <mat-form-field appearance="outline">

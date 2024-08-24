@@ -58,4 +58,50 @@ export class StorageService {
 
 
   }
+
+
+  async uploadFilesCoverToFirebase(files: Express.Multer.File[],folderName: string): Promise<string[]> {
+    try{
+      console.log("service", folderName);
+      const bucketName =  "gs://social-network-29cc2.appspot.com";
+      const urls = [];
+
+      await Promise.all(
+        files.map(async (file) => {
+            const fileName = `coverImage/${uuidv4()}.data`;
+            console.log(fileName);
+            const fileUpload = admin.storage().bucket(bucketName).file(fileName);
+
+            const blobStream = fileUpload.createWriteStream({
+              metadata: {
+                contentType: file.mimetype
+              }
+            });
+
+            await new Promise((resolve, reject) => {
+              blobStream.on('error', (error) => {
+                reject(error);
+              });
+
+              blobStream.on('finish', async () => {
+                const [imageURL] = await fileUpload.getSignedUrl({
+                  action: 'read',
+                  expires: '12-01-2101',
+                });
+                urls.push(imageURL);
+                resolve(imageURL);
+              });
+
+              blobStream.end(file.buffer);
+            });
+          }
+        ),
+      );
+      return urls;
+
+    }catch (error){
+      throw new HttpException(error.message, error.status);
+    }
+
+  }
 }

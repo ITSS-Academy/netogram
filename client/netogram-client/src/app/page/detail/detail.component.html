@@ -1,26 +1,25 @@
 <div class="container">
   <div class="image-container">
-    @for (postDetail of postDetail.imageUrls; track $index) {
+    <div
+      class="carousel-item"
+      *ngFor="let image of imageUrl; let i = index"
+      [class.active]="i === currentIndex"
+    >
       <div
-        class="carousel-item"
-        [ngClass]="{ active: $index === currentIndex }"
-      >
-        <div
-          class="bg-image"
-          [ngStyle]="{
-                'background-image': 'url(' + postDetail + ')'
-              }"
-        ></div>
-        <div class="bg-text">
-          <img
-            style="object-fit: contain;"
-            width="100%"
-            height="100%"
-            [src]="postDetail"
-          />
-        </div>
+        class="bg-image"
+        [ngStyle]="{
+          'background-image': 'url(' + image + ')'
+        }"
+      ></div>
+      <div class="bg-text">
+        <img
+          style="object-fit: contain;"
+          width="100%"
+          height="100%"
+          [src]="image"
+        />
       </div>
-    }
+    </div>
 
     <button mat-icon-button class="close-button" (click)="goBack()">
       <mat-icon>close</mat-icon>
@@ -37,11 +36,11 @@
   <div class="details-container">
     <div class="post-header">
       <div class="profile-pic">
-        <img src="{{ postDetail.uid | idToAvatar | async }}" alt="Profile Picture"/>
+        <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Profile Picture" />
       </div>
       <div class="post-info">
-        <span class="username">{{ postDetail.uid | idToName | async }}</span>
-        <span class="post-date">{{ postDetail.createdAt | dateTranform }}</span>
+        <span class="username">Mạnh Mèo</span>
+        <span class="post-date">July 28, 2022</span>
       </div>
       <div class="post-options">
         <button mat-icon-button>
@@ -50,7 +49,7 @@
       </div>
     </div>
     <div class="post-content">
-      <p>{{ postDetail.content }}</p>
+      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at</p>
       <span class="likes">{{ likes }} likes</span>
     </div>
     <div class="post-actions">
@@ -78,15 +77,15 @@
     </mat-form-field>
 
     <div class="comments-section">
-      @for (user of commentUser; track $index) {
+      @for (user of commentUser ; track $index) {
         <div class="comment">
           <div class="profile-pic-small">
             <img src="{{ user.avatar }}">
           </div>
           <div class="comment-content">
-            <span class="comment-username">{{ user.name }}</span>
-            <span class="comment-text">{{ user.comment }}</span>
-            <span class="comment-date">{{ user.date }}</span>
+            <span class="comment-username">{{user.name}}</span>
+            <span class="comment-text">{{user.comment}}</span>
+            <span class="comment-date">{{user.date}}</span>
           </div>
         </div>
       }
@@ -98,5 +97,3 @@
     </div>
   </div>
 </div>
-
-

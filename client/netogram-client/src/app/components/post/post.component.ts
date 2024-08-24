@@ -11,9 +11,10 @@ import { ProfileState } from '../../ngrx/profile/profile.state';
 import { Store } from '@ngrx/store';
 import * as ProfileActions from '../../ngrx/profile/profile.actions';
 import * as PostActions from '../../ngrx/post/post.actions';
-import { DateTranformPipe } from '../../shared/pipes/date-tranform.pipe';
 
-class PostResult {}
+class PostResult {
+
+}
 
 @Component({
   selector: 'app-post',
@@ -26,7 +27,6 @@ class PostResult {}
     IdToAvatarPipe,
     AsyncPipe,
     IdToNamePipe,
-    DateTranformPipe,
   ],
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss'],
@@ -110,12 +110,12 @@ export class PostComponent {
         : 'ios_share_outlined';
   }
 
-  // toggleBookmark() {
-  //   this.bookmarkIcon =
-  //     this.bookmarkIcon === 'bookmark_outlined'
-  //       ? 'bookmark'
-  //       : 'bookmark_outlined';
-  // }
+  toggleBookmark() {
+    this.bookmarkIcon =
+      this.bookmarkIcon === 'bookmark_outlined'
+        ? 'bookmark'
+        : 'bookmark_outlined';
+  }
 
   prevImage(carousel: HTMLDivElement) {
     const imageWidth = carousel.querySelector('.post-image')?.clientWidth || 0;
@@ -156,9 +156,8 @@ export class PostComponent {
     carousel.scrollLeft = this.scrollLeft - walk;
   }
 
-  navigateToDetail() {
-    this.router.navigateByUrl(`/detail/${this.postUser.id}`).then();
-    this.store.dispatch(PostActions.GetPostById({ id: this.postUser.id }));
+  navigateToDetail(postIndex: number) {
+    this.router.navigate(['/detail', postIndex]);
   }
 
   navigateToProfile() {

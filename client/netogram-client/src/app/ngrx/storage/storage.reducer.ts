@@ -10,6 +10,7 @@ export const initialState: StorageState = {
   isUploading: false,
   uploadError: <HttpErrorResponseModel>{},
   url: [],
+  urlCover: [],
 };
 
 export const StorageReducer = createReducer(
@@ -43,4 +44,44 @@ export const StorageReducer = createReducer(
       };
     },
   ),
+
+  on(StorageActions.uploadFileCover, (state, action) => {
+    console.log(action.type);
+    return {
+      ...state,
+      isUploading: true,
+    };
+  }),
+
+  on(StorageActions.uploadFileCoverSuccess, (state, { type, urlCover }) => {
+    console.log(type);
+    console.log(urlCover);
+    return {
+      ...state,
+      isUploading: false,
+      urlCover: urlCover,
+    };
+  }),
+
+  on(
+    StorageActions.uploadFileCoverFailure,
+    (state, { type, uploadFileErrorMessage }) => {
+      console.log(type);
+      return {
+        ...state,
+        isUploading: false,
+        uploadError: uploadFileErrorMessage,
+      };
+    },
+  ),
+
+  on(StorageActions.clearStorageState, (state) => {
+    return {
+      ...state,
+      isUploading: false,
+      uploadError: <HttpErrorResponseModel>{},
+      url: [],
+      urlCover: [],
+    };
+  }),
 );

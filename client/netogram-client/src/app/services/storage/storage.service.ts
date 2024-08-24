@@ -15,4 +15,12 @@ export class StorageService {
     formData.append('folderName', fileName);
     return this.httpClient.post(`storage/upload`, formData);
   }
+
+  uploadFileCover(file: File, fileName: string) {
+    const formData = new FormData();
+    formData.delete('files');
+    formData.append('imageUrl', file);
+    formData.append('folderName', fileName);
+    return this.httpClient.post(`storage/upload/cover`, formData);
+  }
 }

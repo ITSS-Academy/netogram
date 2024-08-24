@@ -24,4 +24,21 @@ export class StorageController {
             throw error;
         }
     }
+
+    @Post("upload/cover")
+    @UseInterceptors(FilesInterceptor('imageUrl') )
+    async uploadFilesCover(
+      @UploadedFiles() files: Express.Multer.File[],
+      @Body("folderName") folderName: string,
+    ): Promise<{ urls: string[] }> {
+        console.log(files);
+        console.log(folderName);
+        try {
+            const urls = await this.storageService.uploadFilesToFirebase(files, folderName);
+            console.log(urls);
+            return { urls };
+        } catch (error) {
+            throw error;
+        }
+    }
 }
