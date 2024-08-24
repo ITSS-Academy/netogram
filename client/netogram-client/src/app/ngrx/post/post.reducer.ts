@@ -189,4 +189,20 @@ export const PostReducer = createReducer(
       minePosts: <PostResponse>{},
     };
   }),
+
+  on(postActions.ClearAllPosts, (state, { type }) => {
+    console.log(type);
+    return {
+      ...state,
+      posts: <PostResponse>{},
+    };
+  }),
+
+  on(postActions.ClearPostDetail, (state, { type }) => {
+    console.log(type);
+    return {
+      ...state,
+      postDetail: <PostModel>{},
+    };
+  }),
 );

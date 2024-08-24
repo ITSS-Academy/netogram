@@ -52,6 +52,8 @@ export class PostService {
     const [result, total] = await this.postRepository.findAndCount({
       skip,
       take: limitNumber,
+      order: { createdAt: 'DESC' }
+
     });
 
     return {
@@ -74,6 +76,7 @@ export class PostService {
       where: { uid },
       skip,
       take: limitNumber,
+      order: { createdAt: 'DESC' },
     });
 
     return {

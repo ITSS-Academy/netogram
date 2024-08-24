@@ -1,99 +1,107 @@
-<div class="container">
-  <div class="image-container">
-    <div
-      class="carousel-item"
-      *ngFor="let image of imageUrl; let i = index"
-      [class.active]="i === currentIndex"
-    >
-      <div
-        class="bg-image"
-        [ngStyle]="{
-          'background-image': 'url(' + image + ')'
-        }"
-      ></div>
-      <div class="bg-text">
-        <img
-          style="object-fit: contain;"
-          width="100%"
-          height="100%"
-          [src]="image"
-        />
-      </div>
-    </div>
-
-    <button mat-icon-button class="close-button" (click)="goBack()">
-      <mat-icon>close</mat-icon>
-    </button>
-
-    <!-- Navigation Buttons -->
-    <button mat-icon-button class="prev-button" (click)="prevImage()">
-      <mat-icon>chevron_left</mat-icon>
-    </button>
-    <button mat-icon-button class="next-button" (click)="nextImage()">
-      <mat-icon>chevron_right</mat-icon>
-    </button>
+@if (isGettingPostDetail$ | async) {
+  <div class="loading">
+    <mat-spinner diameter="50"></mat-spinner>
   </div>
-  <div class="details-container">
-    <div class="post-header">
-      <div class="profile-pic">
-        <img src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Profile Picture" />
-      </div>
-      <div class="post-info">
-        <span class="username">Mạnh Mèo</span>
-        <span class="post-date">July 28, 2022</span>
-      </div>
-      <div class="post-options">
-        <button mat-icon-button>
-          <span class="material-symbols-outlined">more_horiz</span>
-        </button>
-      </div>
-    </div>
-    <div class="post-content">
-      <p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at</p>
-      <span class="likes">{{ likes }} likes</span>
-    </div>
-    <div class="post-actions">
-      <button mat-icon-button (click)="toggleFavorite()">
-        <mat-icon [ngClass]="{'favorite': favoriteIcon === 'favorite'}">{{ favoriteIcon }}</mat-icon>
-      </button>
-      <button mat-icon-button>
-        <span class="material-symbols-outlined">comment</span>
-      </button>
-      <button mat-icon-button (click)="toggleShare()">
-        <mat-icon>{{ shareIcon }}</mat-icon>
-      </button>
-      <div class="spacer"></div> <!-- Add a spacer to push the bookmark button to the right -->
-      <button mat-icon-button (click)="toggleBookmark()">
-        <mat-icon>{{ bookmarkIcon }}</mat-icon>
-      </button>
-    </div>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Comment</mat-label>
-      <input matInput placeholder="Type your comment here...">
-      <button mat-icon-button matSuffix>
-        <mat-icon>send</mat-icon>
-      </button>
-    </mat-form-field>
-
-    <div class="comments-section">
-      @for (user of commentUser ; track $index) {
-        <div class="comment">
-          <div class="profile-pic-small">
-            <img src="{{ user.avatar }}">
-          </div>
-          <div class="comment-content">
-            <span class="comment-username">{{user.name}}</span>
-            <span class="comment-text">{{user.comment}}</span>
-            <span class="comment-date">{{user.date}}</span>
+} @else {
+  <div class="container">
+    <div class="image-container">
+      @for (postDetail of postDetail.imageUrls; track $index) {
+        <div
+          class="carousel-item"
+          [ngClass]="{ active: $index === currentIndex }"
+        >
+          <div
+            class="bg-image"
+            [ngStyle]="{
+                'background-image': 'url(' + postDetail + ')'
+              }"
+          ></div>
+          <div class="bg-text">
+            <img
+              style="object-fit: contain;"
+              width="100%"
+              height="100%"
+              [src]="postDetail"
+            />
           </div>
         </div>
       }
-      @if (displayedComments < commentUser.length) {
-        <button id="text-button" (click)="loadMoreComments()">
-          Show more comments
+
+      <button mat-icon-button class="close-button" (click)="goBack()">
+        <mat-icon>close</mat-icon>
+      </button>
+
+      <!-- Navigation Buttons -->
+      <button mat-icon-button class="prev-button" (click)="prevImage()">
+        <mat-icon>chevron_left</mat-icon>
+      </button>
+      <button mat-icon-button class="next-button" (click)="nextImage()">
+        <mat-icon>chevron_right</mat-icon>
+      </button>
+    </div>
+    <div class="details-container">
+      <div class="post-header">
+        <div class="profile-pic">
+          <img src="{{ postDetail.uid | idToAvatar | async }}" alt="Profile Picture"/>
+        </div>
+        <div class="post-info">
+          <span class="username">{{ postDetail.uid | idToName | async }}</span>
+          <span class="post-date">{{ postDetail.createdAt  }}</span>
+        </div>
+        <div class="post-options">
+          <button mat-icon-button>
+            <span class="material-symbols-outlined">more_horiz</span>
+          </button>
+        </div>
+      </div>
+      <div class="post-content">
+        <p>{{ postDetail.content }}</p>
+        <span class="likes">{{ likes }} likes</span>
+      </div>
+      <div class="post-actions">
+        <button mat-icon-button (click)="toggleFavorite()">
+          <mat-icon [ngClass]="{'favorite': favoriteIcon === 'favorite'}">{{ favoriteIcon }}</mat-icon>
         </button>
-      }
+        <button mat-icon-button>
+          <span class="material-symbols-outlined">comment</span>
+        </button>
+        <button mat-icon-button (click)="toggleShare()">
+          <mat-icon>{{ shareIcon }}</mat-icon>
+        </button>
+        <div class="spacer"></div> <!-- Add a spacer to push the bookmark button to the right -->
+        <button mat-icon-button (click)="toggleBookmark()">
+          <mat-icon>{{ bookmarkIcon }}</mat-icon>
+        </button>
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Comment</mat-label>
+        <input matInput placeholder="Type your comment here...">
+        <button mat-icon-button matSuffix>
+          <mat-icon>send</mat-icon>
+        </button>
+      </mat-form-field>
+
+      <div class="comments-section">
+        @for (user of commentUser; track $index) {
+          <div class="comment">
+            <div class="profile-pic-small">
+              <img src="{{ user.avatar }}">
+            </div>
+            <div class="comment-content">
+              <span class="comment-username">{{ user.name }}</span>
+              <span class="comment-text">{{ user.comment }}</span>
+              <span class="comment-date">{{ user.date }}</span>
+            </div>
+          </div>
+        }
+        @if (displayedComments < commentUser.length) {
+          <button id="text-button" (click)="loadMoreComments()">
+            Show more comments
+          </button>
+        }
+      </div>
     </div>
   </div>
-</div>
+
+}

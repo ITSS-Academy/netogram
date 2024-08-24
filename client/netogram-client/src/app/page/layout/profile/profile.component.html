@@ -26,23 +26,29 @@
             <p>150 Mutual Friends</p>
           </div>
           <div class="addfrButtonContainer">
-            <button class="btnProfile" style="display: none" mat-stroked-button>
-              <div class="box">
-            <span class="material-symbols-outlined">
-              person_add
-            </span>
-                Add Friend
-              </div>
-            </button>
 
-            <button class="btnProfile" (click)="profileEdit()" mat-stroked-button>
-              <div class="box">
+
+            @if (mineUid === yourUid) {
+              <button class="btnProfile" (click)="profileEdit()" mat-stroked-button>
+                <div class="box">
             <span class="material-symbols-outlined">
               edit
             </span>
-                Edit
-              </div>
-            </button>
+                  Edit
+                </div>
+              </button>
+            } @else {
+              <button class="btnProfile" style="display: none" mat-stroked-button>
+                <div class="box">
+            <span class="material-symbols-outlined">
+              person_add
+            </span>
+                  Add Friend
+                </div>
+              </button>
+            }
+
+
 
             <button class="btnProfile" style="display: none;" mat-stroked-button>
               <div class="box">

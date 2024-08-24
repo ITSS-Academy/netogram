@@ -39,6 +39,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }>,
   ) {
     const { uid } = this.activeRoute.snapshot.params;
+    this.yourUid = uid;
     this.store.dispatch(ProfileActions.getById({ uid }));
     this.store.dispatch(
       PostActions.GetMinePost({ uid, pageNumber: 1, limitNumber: 5 }),
@@ -47,12 +48,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
     // window.scrollTo({ top: window.innerHeight * 0.3, behavior: 'auto'});
   }
 
+  mineUid = '';
+  yourUid = '';
+
   subscriptions: Subscription[] = [];
 
   profileByUid$ = this.store.select('profile', 'profile');
   minePosts$ = this.store.select('post', 'minePosts');
   isGettingMinePost$ = this.store.select('post', 'isGettingMinePost');
   isGettingMine$ = this.store.select('profile', 'isGettingById');
+  mineProfile$ = this.store.select('profile', 'mine');
   minePosts: PostResponse = <PostResponse>{};
   mineProfile: ProfileModel = <ProfileModel>{};
 
@@ -80,6 +85,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
       this.isGettingMine$.subscribe((isGettingMine) => {
         console.log(isGettingMine);
+      }),
+
+      this.mineProfile$.subscribe((mineProfile) => {
+        if (mineProfile) {
+          this.mineUid = mineProfile.uid;
+        }
       }),
     );
   }

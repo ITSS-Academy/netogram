@@ -1,24 +1,27 @@
-<div class="container">
+<div class="container"
+     infiniteScroll
+     [infiniteScrollDistance]="2"
+     [infiniteScrollThrottle]="50"
+     [fromRoot]="true"
+     (scrolled)="onScrollDown($event)"
+
+>
   <div class="create-post">
     <div class="on-create-post">
       <img src="{{profilePic}}" alt="Avatar" class="avatar">
-      <!--    <mat-card id="post-content" appearance="outlined">-->
-      <!--      <mat-card-content (click)="this.openDialog()">What's on your mind?</mat-card-content>-->
-      <!--    </mat-card>-->
       <mat-form-field appearance="outline" subscriptSizing="dynamic" (click)="this.openDialog()">
         <input matInput placeholder="Tell me your story" readonly/>
       </mat-form-field>
-      <!--    <a mat-fab extended id="share-post-button">Share post</a>-->
     </div>
     <hr>
     <button id="add-image" mat-button>
-      <mat-icon appearancxe="outlined">add_photo_alternate</mat-icon>
+      <mat-icon appearance="outlined">add_photo_alternate</mat-icon>
       Image
     </button>
   </div>
   <br>
   <div class="post">
-    @for (post of allPosts.data; track $index) {
+    @for (post of allPosts; track $index) {
       <app-post class="post" [postUser]="post"></app-post>
     }
   </div>
