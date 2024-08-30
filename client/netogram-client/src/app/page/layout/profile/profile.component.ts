@@ -18,7 +18,10 @@ import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
 import { FriendshipState } from '../../../ngrx/friend-ship/friendship.state';
 import * as FriendshipActions from '../../../ngrx/friend-ship/friendship.actions';
 import { FriendShipModel } from '../../../models/friend-ship.model';
-import { getMutualFriends } from '../../../ngrx/friend-ship/friendship.actions';
+import {
+  acceptFriendRequest,
+  getMutualFriends,
+} from '../../../ngrx/friend-ship/friendship.actions';
 
 @Component({
   selector: 'app-profile',
@@ -93,6 +96,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   mineProfile$ = this.store.select('profile', 'mine');
   isUpdating$ = this.store.select('profile', 'isUpdating');
   mineProfile: ProfileModel = <ProfileModel>{};
+  isAcceptFriendRequestSuccess$ = this.store.select(
+    'friendship',
+    'isAcceptSuccess',
+  );
 
   currentPage = 1;
   size = 5;
@@ -122,18 +129,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
       this.minePosts$.subscribe((posts) => {
         if (posts.limitNumber > 0) {
-          console.log(posts);
-
           this.tempArray = [...this.minePosts];
           this.minePosts = [...this.tempArray, ...posts.data];
-          console.log(posts);
           this.itemsCount = posts.limitNumber;
         }
       }),
 
-      this.isGettingMine$.subscribe((isGettingMine) => {
-        console.log(isGettingMine);
-      }),
+      this.isGettingMine$.subscribe((isGettingMine) => {}),
 
       this.mineProfile$.subscribe((mineProfile) => {
         if (mineProfile) {
@@ -143,9 +145,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
     this.isGetFriendshipStatus$.subscribe((success) => {
       if (success) {
-        this.friendshipStatus$.subscribe((status) => {
-          console.log(status);
-        });
+        this.friendshipStatus$.subscribe((status) => {});
       }
     });
     this.getMutualFriends();
@@ -170,6 +170,32 @@ export class ProfileComponent implements OnInit, OnDestroy {
     );
 
     this.isSentFriendRequestSuccess$.subscribe((success) => {
+      if (success) {
+        this.store.dispatch(
+          FriendshipActions.getFriendshipStatus({ friendUid: this.yourUid }),
+        );
+      }
+    });
+  }
+
+  acceptFriendRequest() {
+    this.mineProfile$.subscribe((mineProfile) => {
+      this.friendRequestSentData = {
+        ...this.friendRequestSentData,
+        uid: mineProfile!.uid,
+      };
+    });
+    this.friendRequestSentData = {
+      ...this.friendRequestSentData,
+      friendUid: this.yourUid,
+    };
+    this.store.dispatch(
+      FriendshipActions.acceptFriendRequest({
+        reply: this.friendRequestSentData,
+      }),
+    );
+
+    this.isAcceptFriendRequestSuccess$.subscribe((success) => {
       if (success) {
         this.store.dispatch(
           FriendshipActions.getFriendshipStatus({ friendUid: this.yourUid }),
@@ -207,12 +233,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   onScrollDown(ev: any) {
-    console.log('scrolled down mine !!', ev);
     this.currentPage += 1;
-    console.log(this.currentPage);
 
     if (this.currentPage <= this.itemsCount) {
-      console.log('get more mine post');
       this.store.dispatch(
         PostActions.GetMinePost({
           pageNumber: this.currentPage,

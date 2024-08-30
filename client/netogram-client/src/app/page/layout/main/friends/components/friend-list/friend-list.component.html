@@ -7,9 +7,9 @@
         <div class="friendavaname">
           <img src="{{friend.friendUid | idToAvatar | async}}"/>
           <div class="nameMutual">
-            <div class="nameUser">
-              <span>{{ friend.friendUid | idToName | async }}</span><br>
-            </div>
+
+            <span>{{ friend.friendUid | idToName | async }}</span><br>
+
             <!--          <p>{{friend.mutualFriends}}</p>-->
           </div>
         </div>
@@ -43,7 +43,7 @@
 
           </button>
           <mat-menu id="optionMenu" style="display: flex; flex-direction: row" #menu="matMenu">
-            <button (click)="this.deleteFriend(friend.friendUid)" mat-menu-item>
+            <button (click)="this.deleteFriend(friend.uid)" mat-menu-item>
               <div class="optionBox">
                 <span class="material-symbols-outlined">person_cancel</span>
                 Unfriend

@@ -160,7 +160,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
             ProfileActions.getById({ uid: this.profileMine.uid }),
           );
 
-          console.log('Profile updated successfully');
           this.snackBar.open('Profile updated successfully', 'Close', {
             duration: 3000,
             horizontalPosition: 'center',
@@ -188,8 +187,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
       this.store.dispatch(
         ProfileActions.updateMine({ mine: this.profileData }),
       );
-
-      console.log(this.profileData);
     } else {
       this.submissionStatus = 'error';
       // Reset invalid form controls to their old values
@@ -229,7 +226,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
               fileName: `avatar/${this.profileMine.uid}`,
             }),
           );
-          console.log(file);
           const reader = new FileReader();
           reader.onload = (e: any) => {
             const fileInfo: FileInfo = {
@@ -240,7 +236,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
               previewUrl: e.target.result,
             };
             this.profileForm.patchValue({ [controlName]: fileInfo });
-            console.log(this.profileForm.value);
           };
           reader.readAsDataURL(file);
         }
@@ -259,7 +254,6 @@ export class ProfileEditComponent implements OnInit, OnDestroy {
               fileName: `cover/${this.profileMine.uid}`,
             }),
           );
-          console.log(file);
           const reader = new FileReader();
           reader.onload = (e: any) => {
             const fileInfo: FileInfo = {

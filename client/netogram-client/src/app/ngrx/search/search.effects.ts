@@ -14,7 +14,6 @@ export class searchEffects {
       switchMap((action) => {
         return this.searchService.search(action.query).pipe(
           map((searchResult) => {
-            console.log('searchResult', searchResult);
             return searchActions.searchSuccess({ searchResult });
           }),
           catchError((error) => {

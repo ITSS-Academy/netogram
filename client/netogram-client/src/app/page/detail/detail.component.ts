@@ -136,7 +136,6 @@ export class DetailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.push(
       this.activeRoute.params.subscribe((params) => {
-        console.log(params['id']);
         // const id = BigInt(params['id']);
         // this.store.dispatch(PostActions.GetPostById({ id }));
       }),
@@ -179,7 +178,6 @@ export class DetailComponent implements OnInit, OnDestroy {
       this.isDeleteLikeSuccess$.subscribe((success) => {
         if (success) {
           this.isLoading = false;
-          console.log('deget');
           this.store.dispatch(
             LikeActions.getLikepostCount({
               postId: Number(this.postDetail.id),
@@ -190,32 +188,6 @@ export class DetailComponent implements OnInit, OnDestroy {
           );
         }
       }),
-
-      // this.postDetail$.subscribe((post) => {
-      //   if (post && post.id) {
-      //     this.store.dispatch(
-      //       CommentActions.getComments({ postId: Number(post.id) }),
-      //     );
-      //   }
-      // }),
-      //
-      // this.postDetail$.subscribe((post) => {
-      //   if (post && post.id) {
-      //     console.log('oni1');
-      //     this.store.dispatch(
-      //       LikeActions.getIsLiked({ postId: Number(post.id) }),
-      //     );
-      //   }
-      // }),
-      //
-      // this.postDetail$.subscribe((post) => {
-      //   if (post && post.id) {
-      //     console.log('oni2');
-      //     this.store.dispatch(
-      //       LikeActions.getLikepostCount({ postId: Number(post.id) }),
-      //     );
-      //   }
-      // }),
     );
 
     this.activeRoute.url.subscribe((url) => {
@@ -256,7 +228,6 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   createComment() {
     this.isLoading = true;
-    console.log(this.commentForm.value.text);
     this.postDetail$.subscribe((post) => {
       if (post && post.id) {
         this.commentData = { ...this.commentData, postId: Number(post.id) };
@@ -271,16 +242,12 @@ export class DetailComponent implements OnInit, OnDestroy {
     );
 
     this.commentForm.reset();
-    // this.commentList$.subscribe((comments) => {
-    //   console.log(comments);
-    // })
   }
 
   createLikePost() {
     this.isLoading = true;
     this.postDetail$.pipe(take(1)).subscribe((post) => {
       if (post && post.id) {
-        console.log('cre');
         this.likePostData = { ...this.likePostData, postId: Number(post.id) };
         this.store.dispatch(
           LikeActions.createLikepost({ likePost: this.likePostData }),
@@ -293,7 +260,6 @@ export class DetailComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.postDetail$.pipe(take(1)).subscribe((post) => {
       if (post && post.id) {
-        console.log('de');
         this.likePostData = { ...this.likePostData, postId: Number(post.id) };
 
         this.store.dispatch(
@@ -322,7 +288,6 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   prevImage() {
-    console.log(this.currentIndex);
     this.currentIndex =
       this.currentIndex > 0
         ? this.currentIndex - 1
@@ -330,7 +295,6 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   nextImage() {
-    console.log(this.currentIndex);
     this.currentIndex =
       this.currentIndex < this.postDetail.imageUrls.length - 1
         ? this.currentIndex + 1
@@ -358,12 +322,17 @@ export class DetailComponent implements OnInit, OnDestroy {
   }
 
   navigateToProfile() {
-    this.router.navigateByUrl(`/profile/${this.postDetail.uid}`).then();
     this.store.dispatch(ProfileActions.getById({ uid: this.postDetail.uid }));
+    this.router.navigate([`/profile`, this.postDetail.uid]).then(() => {
+      window.location.reload();
+    });
   }
 
   navigateToCommentUser(uid: string) {
-    this.router.navigateByUrl(`/profile/${uid}`).then();
     this.store.dispatch(ProfileActions.getById({ uid }));
+
+    this.router.navigateByUrl(`/profile/${uid}`).then(() => {
+      window.location.reload();
+    });
   }
 }

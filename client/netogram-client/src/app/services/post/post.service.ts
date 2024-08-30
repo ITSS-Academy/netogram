@@ -9,7 +9,6 @@ export class PostService {
   constructor(private httpClient: HttpClientAuth) {}
 
   createPost(post: PostModel) {
-    console.log('post', post);
     const formData = new FormData();
     formData.append('content', post.content);
     formData.append('uid', post.uid);
@@ -17,13 +16,11 @@ export class PostService {
       formData.append('imageUrl', image);
     });
     formData.append('id', post.id.toString());
-    console.log('formData', formData);
 
     return this.httpClient.post('post', formData);
   }
 
   getAllPost(pageNumber: number, limitNumber: number) {
-    console.log(pageNumber, limitNumber);
     return this.httpClient.get(
       `post/all?page=${pageNumber}&limit=${limitNumber}`,
     );

@@ -102,18 +102,10 @@ export class HomeComponent implements OnInit, OnDestroy {
       panelClass: 'custom-dialog-container',
       // data: {name: this.name(), port: this.port()},
     });
-    
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log('The dialog was closed');
-    //   if (result !== undefined) {
-    //     this.port.set(result);
-    //   }
-    // });
   }
 
   onScrollDown(ev: any) {
     this.currentPage += 1;
-    console.log(this.currentPage);
 
     if (this.currentPage <= this.itemsCount) {
       this.store.dispatch(

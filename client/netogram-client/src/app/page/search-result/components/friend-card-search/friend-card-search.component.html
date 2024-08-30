@@ -7,36 +7,15 @@
       </div>
     </div>
 
-    @if (profile.uid == mineProfile) {
-      <button class="btnProfile" (click)="navigateToProfile()" mat-button>
-        <div class="box">
+    <button class="btnProfile" (click)="navigateToProfile()" mat-stroked-button>
+      <div class="box">
             <span class="material-symbols-outlined">
-              edit
+              person
             </span>
-          View Your Profile
-        </div>
-      </button>
-    } @else {
-      @if (profile.status == null) {
-        <button (click)="addFriendSearch(profile.uid)" class="btnProfileAdd" mat-flat-button>
-          <div class="box">
-              <span class="material-symbols-outlined">
-                person_add
-              </span>
-            Add Friend
-          </div>
-        </button>
-      } @else if (profile.status == 'pending') {
-        <button class="btnProfile" (click)="deleteRequest(profile.uid)" mat-stroked-button>
-          <div class="box">
-              <span class="material-symbols-outlined">
-                pending
-              </span>
-            Requested
-          </div>
-        </button>
-      }
-    }
+        View Profile
+      </div>
+    </button>
+
     <!--    @if ((friendshipStatus$ | async) == null){-->
     <!--      <button (click)="addFriendSearch(profile.uid)" class="btnProfile" mat-stroked-button>-->
     <!--        <div class="box">-->

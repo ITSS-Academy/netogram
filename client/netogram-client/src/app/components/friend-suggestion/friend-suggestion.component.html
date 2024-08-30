@@ -3,7 +3,6 @@
   <div class="friend-suggestions">
     <h3>Friend Suggestions</h3>
     <div *ngFor="let suggestion of (suggetedFriends$ | async) " class="suggestion">
-      {{ (suggestion | async)}}
       <app-friend-card [friend]="suggestion"></app-friend-card>
     </div>
   </div>

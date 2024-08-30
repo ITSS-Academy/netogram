@@ -77,7 +77,8 @@
                     </div>
                   </button>
                 } @else {
-                  <button mat-flat-button id="confirmButton" class="button">Confirm</button>
+                  <button mat-flat-button id="confirmButton" (click)="acceptFriendRequest()" class="button">Confirm
+                  </button>
                   <button mat-stroked-button (click)="sendUnfriend()" class="button">Delete</button>
 
                 }

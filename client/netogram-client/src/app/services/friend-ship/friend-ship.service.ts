@@ -25,18 +25,22 @@ export class FriendShipService {
   }
 
   getFriendRequestList(uid: string, page: number, limit: number) {
-    return this.httpClient.get(`friendship/friend-request/${uid}?page=${page}&limit=${limit}`);
+    return this.httpClient.get(
+      `friendship/friend-request/${uid}?page=${page}&limit=${limit}`,
+    );
   }
 
-  getMutualFriends(uid: string, friendUid: string){
+  getMutualFriends(uid: string, friendUid: string) {
     return this.httpClient.get(`friendship/mutuals/${uid}/${friendUid}`);
   }
 
-  getSuggestedFriends(uid: string, page:number, limit:number){
-    return this.httpClient.get(`friendship/suggest/${uid}?page=${page}&limit=${limit}`);
+  getSuggestedFriends(uid: string, page: number, limit: number) {
+    return this.httpClient.get(
+      `friendship/suggest/${uid}?page=${page}&limit=${limit}`,
+    );
   }
 
-  unfriend( friendUid: string,uid: string) {
+  unfriend(friendUid: string, uid: string) {
     return this.httpClient.delete(`friendship/unfriend/${friendUid}/${uid}`);
   }
 }

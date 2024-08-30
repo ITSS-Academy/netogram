@@ -203,13 +203,6 @@ export class PostComponent implements OnInit, OnDestroy {
     this.store.dispatch(PostActions.GetPostById({ id: this.postUser.id }));
     // this.router.navigateByUrl(`/detail/${this.postUser.id}`).then();
     this.location.go(`/detail/${this.postUser.id}`);
-
-    // const currentUrl = this.router.url;
-    // // console.log('post', post);
-    //
-    // dialogRef.afterClosed().subscribe(() => {
-    //   this.location.go(currentUrl);
-    // });
   }
 
   navigateToProfile() {
@@ -222,10 +215,5 @@ export class PostComponent implements OnInit, OnDestroy {
     this.dialog.open(ConfirmDialogComponent, {
       data: { post, mineUid: this.mineUid },
     });
-    console.log('post', post);
-    //
-    // this.store.dispatch(
-    //   PostActions.DeletePost({ id: this.postUser.id, uid: this.mineUid }),
-    // );
   }
 }

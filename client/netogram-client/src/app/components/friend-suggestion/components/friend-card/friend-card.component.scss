@@ -5,6 +5,7 @@
   padding: 5px;
   border-radius: 12px;
 }
+
 h3 {
   font-size: 22px;
   font-weight: bold;
@@ -23,7 +24,6 @@ h3 {
   align-items: center;
   justify-content: space-around;
   margin: 1px 0;
-  padding: 12px;
   @media only screen and (max-width: 1366px) {
     padding: 10px;
   }
@@ -53,7 +53,8 @@ h3 {
   font-weight: bold;
   color: var(--onSurface);
 }
-.mutual-friends{
+
+.mutual-friends {
   font-size: 13px;
   color: var(--outline);
   font-weight: 500;
@@ -86,4 +87,17 @@ h3 {
     font-size: 18px;
     padding-left: 15px;
   }
+}
+
+.box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.btnProfileAdd {
+  background-color: var(--primary);
+  border-radius: 12px;
+  color: var(--onPrimary);
+
 }

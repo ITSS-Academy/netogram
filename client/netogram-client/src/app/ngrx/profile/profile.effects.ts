@@ -12,7 +12,6 @@ export class ProfileEffects {
     return this.actions$.pipe(
       ofType(profileActions.createMine),
       switchMap((action) => {
-        console.log(action.mine);
         return this.profileService.createProfile(action.mine).pipe(
           map(() => {
             return profileActions.createMineSuccess();

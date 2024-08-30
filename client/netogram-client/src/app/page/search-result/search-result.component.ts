@@ -104,9 +104,6 @@ export class SearchResultComponent implements OnInit, OnDestroy {
         if (result) {
           this.posts = result.posts;
           this.profiles = result.profiles;
-
-          console.log('posts', this.posts);
-          console.log('profile', this.profiles);
         }
       }),
     );

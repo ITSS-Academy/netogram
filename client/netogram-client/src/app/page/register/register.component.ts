@@ -103,15 +103,17 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.createMineSuccess$.subscribe((isSuccess) => {
-      this.isloading = true;
       if (isSuccess) {
+        this.isloading = true;
         this.store.dispatch(ProfileActions.getMine({ uid: this.uid }));
+      } else {
+        this.isloading = false;
       }
     });
 
     this.getMineSuccess$.subscribe((isSuccess) => {
-      this.isloading = false;
       if (isSuccess) {
+        this.isloading = false;
         this.router.navigate(['/home']).then();
       }
     });
@@ -149,7 +151,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return;
     } else {
       this.isloading = true;
-      console.log('run');
       this.regisData = {
         email: this.regisForm.value.email ?? '',
         userName: this.regisForm.value.userName ?? '',
@@ -160,7 +161,5 @@ export class RegisterComponent implements OnInit, OnDestroy {
       };
       this.store.dispatch(ProfileActions.createMine({ mine: this.regisData }));
     }
-
-    console.log(this.regisData);
   }
 }

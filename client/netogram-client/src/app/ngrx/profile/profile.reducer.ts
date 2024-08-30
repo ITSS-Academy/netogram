@@ -61,7 +61,6 @@ export const profileReducer = createReducer(
   }),
 
   on(ProfileActions.createMineFailure, (state, { createErrorMessage }) => {
-    console.log(createErrorMessage);
     return {
       ...state,
       isCreating: false,
@@ -91,7 +90,6 @@ export const profileReducer = createReducer(
   }),
 
   on(ProfileActions.updateMineFailure, (state, { updateErrorMessage }) => {
-    console.log(updateErrorMessage);
     return {
       ...state,
       isUpdating: false,
@@ -171,7 +169,6 @@ export const profileReducer = createReducer(
   }),
 
   on(ProfileActions.getByIdFailure, (state, { getErrorMessageById, type }) => {
-    console.log(getErrorMessageById);
     return {
       ...state,
       isGettingById: false,

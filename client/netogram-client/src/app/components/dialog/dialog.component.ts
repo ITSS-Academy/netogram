@@ -86,7 +86,6 @@ export class DialogComponent implements OnDestroy, OnInit {
     this.subscription.push(
       this.profileMine$.subscribe((profile) => {
         if (profile) {
-          console.log('profile', profile);
         }
       }),
 
@@ -167,7 +166,6 @@ export class DialogComponent implements OnDestroy, OnInit {
 
   processFiles(files: FileList): void {
     const filesToProcess = Math.min(files.length, 5 - this.imageCount);
-    console.log('Files selected:', files);
     for (let i = 0; i < filesToProcess; i++) {
       const file = files[i];
       if (file) {
@@ -224,7 +222,6 @@ export class DialogComponent implements OnDestroy, OnInit {
     this.postData.content = <string>this.postForm.value.content;
     this.postData.imageUrls = [];
     this.postData.imageUrls = this.selectedFiles;
-    console.log('Post Data', this.postData);
     this.store.dispatch(postActions.CreatePost({ post: this.postData }));
     // this.dialogRef.close();
   }

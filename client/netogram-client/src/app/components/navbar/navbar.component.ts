@@ -110,7 +110,6 @@ export class NavbarComponent implements OnInit {
   onSearchKeyUp(event: KeyboardEvent): void {
     if (event.key === 'Enter') {
       const query = this.searchControl.value;
-      console.log('Close dialog');
       this.dialog.closeAll();
       if (query && query.trim() !== '') {
         this.route

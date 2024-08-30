@@ -23,7 +23,6 @@ export class AuthService {
       new GoogleAuthProvider(),
     );
     const token = await credential.user.getIdToken();
-    // console.log('token', token);
     return {
       uid: credential.user.uid,
       userName: credential.user.displayName || '',

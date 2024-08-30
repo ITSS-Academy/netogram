@@ -60,7 +60,6 @@ export const PostReducer = createReducer(
   }),
 
   on(postActions.CreatePostFailure, (state, { createPostErrorMessage }) => {
-    console.log(createPostErrorMessage);
     return {
       ...state,
       isCreating: false,
@@ -89,7 +88,6 @@ export const PostReducer = createReducer(
   }),
 
   on(postActions.UpdatePostFailure, (state, { updatePostErrorMessage }) => {
-    console.log(updatePostErrorMessage);
     return {
       ...state,
       isUpdating: false,
@@ -119,7 +117,6 @@ export const PostReducer = createReducer(
   }),
 
   on(postActions.GetPostByIdFailure, (state, { getPostByIdErrorMessage }) => {
-    console.log(getPostByIdErrorMessage);
     return {
       ...state,
       isGettingPostDetail: false,
@@ -140,7 +137,6 @@ export const PostReducer = createReducer(
 
   on(postActions.GetAllPostSuccess, (state, { posts, type }) => {
     console.log(type);
-    console.log(posts);
     return {
       ...state,
       isGettingAllPosts: false,
@@ -150,7 +146,6 @@ export const PostReducer = createReducer(
   }),
 
   on(postActions.GetAllPostFailure, (state, { getAllPostErrorMessage }) => {
-    console.log(getAllPostErrorMessage);
     return {
       ...state,
       isGettingAllPosts: false,
@@ -179,7 +174,6 @@ export const PostReducer = createReducer(
   }),
 
   on(postActions.GetMinePostFailure, (state, { getMinePostErrorMessage }) => {
-    console.log(getMinePostErrorMessage);
     return {
       ...state,
       isGettingMinePost: false,
@@ -207,7 +201,6 @@ export const PostReducer = createReducer(
   }),
 
   on(postActions.DeletePostFailure, (state, { deletePostErrorMessage }) => {
-    console.log(deletePostErrorMessage);
     return {
       ...state,
       isDeleting: false,

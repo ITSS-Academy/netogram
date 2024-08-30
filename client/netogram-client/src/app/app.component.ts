@@ -72,7 +72,6 @@ export class AppComponent implements OnInit {
         this.store.dispatch(ProfileActions.getMine({ uid: user.uid }));
       } else {
         this.router.navigate(['/login']).then(() => {
-          console.log('User is not logged in');
           this.isShowSpinner = false;
         });
       }
@@ -86,16 +85,12 @@ export class AppComponent implements OnInit {
       select((state) => state.auth.authCredential),
     );
 
-    this.storeIdToken$.subscribe((idToken) => {
-      console.log('idToken', idToken);
-    });
+    this.storeIdToken$.subscribe((idToken) => {});
 
     this.route.url.subscribe((url) => {
-      console.log('url', url);
       const urlSegment = url.join('/');
       if (urlSegment.startsWith('detail/')) {
         const id = BigInt(urlSegment.split('/')[1]);
-        console.log('iddetail at home' + ':', id);
         //convert string to bigint
         this.store.dispatch(PostActions.GetPostById({ id: id }));
 
@@ -123,14 +118,11 @@ export class AppComponent implements OnInit {
       ]) => {
         if (authCredential.uid) {
           if (isGetMineSuccess && mine?.uid) {
-            console.log('calll');
-          
             const currentUrl = this.router.url;
             if (
-              currentUrl === '/friends/friend%20list' ||
               currentUrl.includes('/profile/') ||
-              currentUrl.includes('/detail/') ||
-              currentUrl.includes('/friend%20request')
+              currentUrl.includes('/profile/') ||
+              currentUrl.includes('/detail/')
             ) {
               this.isShowSpinner = false;
               this.router.navigate([currentUrl]);
@@ -140,7 +132,6 @@ export class AppComponent implements OnInit {
               });
             }
           } else if (isGetMineFailure && getMineError.status) {
-            console.log(getMineError);
             this.router.navigate(['/register']).then(() => {
               this.isShowSpinner = false;
               this.store.dispatch(ProfileActions.clearMessages());
