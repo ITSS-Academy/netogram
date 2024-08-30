@@ -17,7 +17,7 @@ import { ProfileState } from '../../../../ngrx/profile/profile.state';
 import { Subscription } from 'rxjs';
 import { PostModel, PostResponse } from '../../../../models/post.model';
 import { InfiniteScrollDirective } from 'ngx-infinite-scroll';
-import { AsyncPipe, NgIf } from '@angular/common';
+import { AsyncPipe, Location, NgIf } from '@angular/common';
 import { ProfileModel } from '../../../../models/profile.model';
 
 @Component({
@@ -35,6 +35,7 @@ import { ProfileModel } from '../../../../models/profile.model';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   constructor(
+    private location: Location,
     private store: Store<{
       post: PostState;
       profile: ProfileState;
@@ -101,7 +102,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       panelClass: 'custom-dialog-container',
       // data: {name: this.name(), port: this.port()},
     });
-
+    
     // dialogRef.afterClosed().subscribe(result => {
     //   console.log('The dialog was closed');
     //   if (result !== undefined) {

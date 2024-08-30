@@ -1,6 +1,7 @@
 import { CanActivateFn, Routes } from '@angular/router';
 import { authGuard } from './guards/auth.guard';
 import { DetailComponent } from './page/detail/detail.component';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 export const routes: Routes = [
   {
@@ -22,6 +23,7 @@ export const routes: Routes = [
     path: 'detail/:id',
     component: DetailComponent,
   },
+
   {
     path: 'search-result',
     loadChildren: () =>

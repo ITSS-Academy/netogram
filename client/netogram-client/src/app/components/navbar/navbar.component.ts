@@ -120,6 +120,10 @@ export class NavbarComponent implements OnInit {
     }
   }
 
+  navigateSearch() {
+    this.route.navigateByUrl('/search-result').then();
+  }
+
   handleImageError(event: any) {
     event.target.src = 'public/images/avatar.png';
   }

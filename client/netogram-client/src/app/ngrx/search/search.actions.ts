@@ -16,3 +16,5 @@ export const searchFailure = createAction(
   '[Search] Search Failure',
   props<{ searchResultPostFailure: HttpErrorResponseModel }>(),
 );
+
+export const clearSearch = createAction('[Search] Clear Search');

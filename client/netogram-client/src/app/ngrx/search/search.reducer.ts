@@ -41,4 +41,11 @@ export const SearchReducer = createReducer(
       };
     },
   ),
+
+  on(SearchActions.clearSearch, (state) => {
+    return {
+      ...state,
+      searchResult: <CommonSearchResultModel>{},
+    };
+  }),
 );

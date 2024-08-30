@@ -339,7 +339,7 @@ export class DetailComponent implements OnInit, OnDestroy {
 
   goBack(): void {
     this.location.back();
-    this.dialogRef.close();
+    // this.dialogRef.close();
     this.store.dispatch(PostActions.ClearPostDetail());
   }
 

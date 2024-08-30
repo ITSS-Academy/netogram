@@ -7,69 +7,76 @@
         <mat-icon>arrow_back</mat-icon>
       </button>
     </div>
-    <div class="search-result">
-
-
-      <mat-card class="user-suggestions">
-        <h6 class="title-search">Everyone</h6>
-        @for (profile of profiles; track $index) {
-          <mat-card-content>
-            <div class="user-item">
-              <div class="user-info">
-                <img [src]="profile.uid| idToAvatar|async" [alt]="profile" class="user-avatar">
-                <div class="user-details">
-                  <div class="user-name">{{ profile.uid|idToName|async }}</div>
+    @if (profiles.length > 0 ||
+    posts.length == 0 ||
+    profiles.length == 0 && posts.length == 0) {
+      <div class="no-result">
+        <h4>No result found</h4>
+      </div>
+    } @else {
+      <div class="search-result">
+        <mat-card class="user-suggestions">
+          <h6 class="title-search">Everyone</h6>
+          @for (profile of profiles; track $index) {
+            <mat-card-content>
+              <div class="user-item">
+                <div class="user-info">
+                  <img [src]="profile.uid| idToAvatar|async" [alt]="profile" class="user-avatar">
+                  <div class="user-details">
+                    <div class="user-name">{{ profile.uid|idToName|async }}</div>
+                  </div>
                 </div>
-              </div>
 
-              @if ((friendshipStatus$ | async) == null) {
-                <button (click)="addFriendSearch(profile.uid)" class="btnProfile" mat-stroked-button>
-                  <div class="box">
+                @if ((friendshipStatus$ | async) == null) {
+                  <button (click)="addFriendSearch(profile.uid)" class="btnProfile" mat-stroked-button>
+                    <div class="box">
             <span class="material-symbols-outlined">
               person_add
             </span>
-                    Add Friend
-                  </div>
-                </button>
-              } @else if ((friendshipStatus$ | async)?.status == 'pending') {
-                @if ((friendshipStatus$ | async)?.uid == mineUid) {
-                  <button class="btnProfile" mat-stroked-button>
-                    <div class="box">
+                      Add Friend
+                    </div>
+                  </button>
+                } @else if ((friendshipStatus$ | async)?.status == 'pending') {
+                  @if ((friendshipStatus$ | async)?.uid == mineUid) {
+                    <button class="btnProfile" mat-stroked-button>
+                      <div class="box">
                 <span class="material-symbols-outlined">
                   pending
                 </span>
-                      Requested
-                    </div>
-                  </button>
+                        Requested
+                      </div>
+                    </button>
+                  } @else {
+                    <button mat-flat-button id="confirmButton" class="button">Confirm</button>
+                    <button mat-stroked-button class="button">Delete</button>
+
+                  }
+
                 } @else {
-                  <button mat-flat-button id="confirmButton" class="button">Confirm</button>
-                  <button mat-stroked-button class="button">Delete</button>
-
-                }
-
-              } @else {
-                <button class="btnProfile" mat-stroked-button>
-                  <div class="box">
+                  <button class="btnProfile" mat-stroked-button>
+                    <div class="box">
               <span class="material-symbols-outlined">
                 person_check
               </span>
-                    Friends
-                  </div>
-                </button>
-              }
+                      Friends
+                    </div>
+                  </button>
+                }
 
-            </div>
-          </mat-card-content>
+              </div>
+            </mat-card-content>
+          }
+
+
+        </mat-card>
+        <div class="post">
+        </div>
+        @for (post of posts; track $index) {
+          <app-post [postUser]="post"></app-post>
         }
-
-
-      </mat-card>
-      <div class="post">
       </div>
-      @for (post of posts; track $index) {
-        <app-post [postUser]="post"></app-post>
-      }
-    </div>
+      
+    }
     <div class="right">
 
     </div>

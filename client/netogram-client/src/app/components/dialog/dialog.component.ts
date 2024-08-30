@@ -8,7 +8,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { MaterialModule } from '../../shared/material.module';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { ProfileState } from '../../ngrx/profile/profile.state';
 import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
@@ -23,6 +23,7 @@ import * as profileActions from '../../ngrx/profile/profile.actions';
 import * as PostActions from '../../ngrx/post/post.actions';
 import { AsyncPipe } from '@angular/common';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dialog',
@@ -72,6 +73,7 @@ export class DialogComponent implements OnDestroy, OnInit {
   };
 
   constructor(
+    private router: Router,
     private store: Store<{
       profile: ProfileState;
       post: PostState;
@@ -90,16 +92,12 @@ export class DialogComponent implements OnDestroy, OnInit {
 
       this.isCreateSuccess$.subscribe((success) => {
         if (success) {
-          this.store.dispatch(
-            PostActions.GetAllPost({ pageNumber: 1, limitNumber: 4 }),
-          );
           this.snackBar.open('Post successfully', 'Close', {
             duration: 3000,
             horizontalPosition: 'center',
             verticalPosition: 'bottom',
             // panelClass: ['snackbar'],
           });
-          this.dialogRef.close();
         }
       }),
     );
@@ -107,10 +105,16 @@ export class DialogComponent implements OnDestroy, OnInit {
 
   ngOnDestroy(): void {
     this.subscription.forEach((sub) => sub.unsubscribe());
+    this.isCreateSuccess$.subscribe().unsubscribe();
     //unsubscribe all post
   }
 
   onNoClick(): void {
+    this.router.navigate(['/home']).then(() => {
+      this.store.dispatch(
+        PostActions.GetAllPost({ pageNumber: 1, limitNumber: 10 }),
+      );
+    });
     this.dialogRef.close();
   }
 
