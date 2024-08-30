@@ -1,0 +1,77 @@
+<mat-card-content>
+  <div class="user-item">
+    <div class="user-info">
+      <img [src]="profile.uid| idToAvatar|async" (click)="navigateToProfile()" [alt]="profile" class="user-avatar">
+      <div class="user-details">
+        <div class="user-name">{{ profile.uid|idToName|async }}</div>
+      </div>
+    </div>
+
+    @if (profile.uid == mineProfile) {
+      <button class="btnProfile" (click)="navigateToProfile()" mat-button>
+        <div class="box">
+            <span class="material-symbols-outlined">
+              edit
+            </span>
+          View Your Profile
+        </div>
+      </button>
+    } @else {
+      @if (profile.status == null) {
+        <button (click)="addFriendSearch(profile.uid)" class="btnProfileAdd" mat-flat-button>
+          <div class="box">
+              <span class="material-symbols-outlined">
+                person_add
+              </span>
+            Add Friend
+          </div>
+        </button>
+      } @else if (profile.status == 'pending') {
+        <button class="btnProfile" (click)="deleteRequest(profile.uid)" mat-stroked-button>
+          <div class="box">
+              <span class="material-symbols-outlined">
+                pending
+              </span>
+            Requested
+          </div>
+        </button>
+      }
+    }
+    <!--    @if ((friendshipStatus$ | async) == null){-->
+    <!--      <button (click)="addFriendSearch(profile.uid)" class="btnProfile" mat-stroked-button>-->
+    <!--        <div class="box">-->
+    <!--            <span class="material-symbols-outlined">-->
+    <!--              person_add-->
+    <!--            </span>-->
+    <!--          Add Friend-->
+    <!--        </div>-->
+    <!--      </button>-->
+    <!--    } @else if ((friendshipStatus$ | async)?.status == 'pending'){-->
+    <!--      @if ((friendshipStatus$ | async)?.uid == mineUid){-->
+    <!--        <button class="btnProfile"   mat-stroked-button>-->
+    <!--          <div class="box">-->
+    <!--                <span class="material-symbols-outlined">-->
+    <!--                  pending-->
+    <!--                </span>-->
+    <!--            Requested-->
+    <!--          </div>-->
+    <!--        </button>-->
+    <!--      } @else {-->
+    <!--        <button mat-flat-button id="confirmButton" class="button">Confirm</button>-->
+    <!--        <button mat-stroked-button  class="button">Delete</button>-->
+
+    <!--      }-->
+
+    <!--    } @else {-->
+    <!--      <button class="btnProfile"  mat-stroked-button>-->
+    <!--        <div class="box">-->
+    <!--              <span class="material-symbols-outlined">-->
+    <!--                person_check-->
+    <!--              </span>-->
+    <!--          Friends-->
+    <!--        </div>-->
+    <!--      </button>-->
+    <!--    }-->
+
+  </div>
+</mat-card-content>

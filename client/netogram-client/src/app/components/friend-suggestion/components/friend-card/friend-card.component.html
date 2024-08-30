@@ -1,0 +1,29 @@
+<div class="suggestion">
+<img [src]="friend.suggestedFriend | idToAvatar| async" alt="Avatar" class="avatar">
+<div class="label">
+  <span class="name">{{ friend.suggestedFriend |idToName| async }}</span>
+  <span class="mutual-friends">{{ friend.mutualFriendsCount }} mutual </span>
+</div>
+
+@if (this.friend.status == null){
+  <button (click)="addFriend(friend.suggestedFriend)" class="btnProfile" mat-stroked-button>
+    <div class="box">
+            <span class="material-symbols-outlined">
+              person_add
+            </span>
+      Add Friend
+    </div>
+  </button>
+} @else {
+  @if (friend.status == 'pending'){
+  <button class="btnProfile"  (click)="removeRequest(friend.suggestedFriend)" mat-stroked-button>
+    <div class="box">
+                <span class="material-symbols-outlined">
+                  pending
+                </span>
+      Requested
+    </div>
+  </button>
+  }
+}
+</div>

@@ -20,6 +20,7 @@ import * as FriendshipActions from '../../ngrx/friend-ship/friendship.actions';
 import { FriendshipModel } from '../../models/friendship.model';
 import { getFriendshipStatus } from '../../ngrx/friend-ship/friendship.actions';
 import { FriendshipState } from '../../ngrx/friend-ship/friendship.state';
+import { FriendCardSearchComponent } from './components/friend-card-search/friend-card-search.component';
 
 @Component({
   selector: 'app-search-result',
@@ -40,6 +41,7 @@ import { FriendshipState } from '../../ngrx/friend-ship/friendship.state';
     AsyncPipe,
     IdToAvatarPipe,
     IdToNamePipe,
+    FriendCardSearchComponent,
   ],
   styleUrls: ['./search-result.component.scss'],
 })
@@ -99,51 +101,15 @@ export class SearchResultComponent implements OnInit, OnDestroy {
 
     this.subscription.push(
       this.searchResult$.subscribe((result) => {
-        if (result.profiles != undefined && result.posts != undefined) {
+        if (result) {
           this.posts = result.posts;
           this.profiles = result.profiles;
+
           console.log('posts', this.posts);
           console.log('profile', this.profiles);
         }
       }),
     );
-
-    for (let profile of this.profiles) {
-      this.store.dispatch(getFriendshipStatus({ friendUid: profile.uid }));
-      this.getStatusSuccess$.subscribe((success) => {
-        if (success) {
-          this.friendshipStatus$.subscribe((status) => {
-            this.status.push(status);
-          });
-        }
-      });
-    }
-    console.log('status', this.status);
-  }
-
-  addFriendSearch(friendUid: string) {
-    this.mineProfile$.subscribe((mineProfile) => {
-      if (mineProfile) {
-        this.friendRequestSentData = {
-          ...this.friendRequestSentData,
-          friendUid: friendUid,
-          uid: mineProfile.uid,
-        };
-      }
-    });
-    this.friendRequestSentData = { ...this.friendRequestSentData, friendUid };
-    console.log(this.friendRequestSentData);
-    this.store.dispatch(
-      FriendshipActions.addFriend({
-        friendShipModel: this.friendRequestSentData,
-      }),
-    );
-
-    this.isCreateSuccess$.subscribe((isSuggestedFriendsLoaded) => {
-      if (isSuggestedFriendsLoaded) {
-        this.store.dispatch(getFriendshipStatus({ friendUid }));
-      }
-    });
   }
 
   goBack(): void {

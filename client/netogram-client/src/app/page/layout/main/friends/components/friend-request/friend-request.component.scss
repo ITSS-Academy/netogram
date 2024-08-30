@@ -134,3 +134,11 @@ p{
   background-color: var(--primary);
   color: var(--onPrimary);
 }
+
+.mat-mdc-paginator {
+  border-radius: 12px
+}
+
+.noResult{
+  position: absolute;
+}

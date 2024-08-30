@@ -95,6 +95,7 @@ export const friendshipReducer = createReducer(
     }
   }),
   on(FriendshipActions.getFriendshipStatus, (state, action) => {
+    console.log('zxcvzxcvzxcvzxcvzx')
     return <FriendshipState>{
       ...state,
       friendshipStatusIsLoading: true,
@@ -103,6 +104,8 @@ export const friendshipReducer = createReducer(
   }),
 
   on(FriendshipActions.getFriendshipStatusSuccess, (state, action) => {
+    console.log('ádfasdfasdfasdfasd');
+    console.log(action.friendshipStatus);
     return <FriendshipState>{
       ...state,
       friendshipStatusIsLoading: false,

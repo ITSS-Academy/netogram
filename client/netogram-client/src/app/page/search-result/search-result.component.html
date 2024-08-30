@@ -1,4 +1,5 @@
 <app-navbar></app-navbar>
+
 <div class="container">
   <router-outlet></router-outlet>
   <div class="body">
@@ -7,9 +8,12 @@
         <mat-icon>arrow_back</mat-icon>
       </button>
     </div>
-    @if (profiles.length > 0 ||
-    posts.length == 0 ||
-    profiles.length == 0 && posts.length == 0) {
+    @if (profiles === undefined ||
+    posts === undefined ||
+    profiles.length === 0 ||
+    posts.length === 0
+
+      ) {
       <div class="no-result">
         <h4>No result found</h4>
       </div>
@@ -18,56 +22,10 @@
         <mat-card class="user-suggestions">
           <h6 class="title-search">Everyone</h6>
           @for (profile of profiles; track $index) {
-            <mat-card-content>
-              <div class="user-item">
-                <div class="user-info">
-                  <img [src]="profile.uid| idToAvatar|async" [alt]="profile" class="user-avatar">
-                  <div class="user-details">
-                    <div class="user-name">{{ profile.uid|idToName|async }}</div>
-                  </div>
-                </div>
-
-                @if ((friendshipStatus$ | async) == null) {
-                  <button (click)="addFriendSearch(profile.uid)" class="btnProfile" mat-stroked-button>
-                    <div class="box">
-            <span class="material-symbols-outlined">
-              person_add
-            </span>
-                      Add Friend
-                    </div>
-                  </button>
-                } @else if ((friendshipStatus$ | async)?.status == 'pending') {
-                  @if ((friendshipStatus$ | async)?.uid == mineUid) {
-                    <button class="btnProfile" mat-stroked-button>
-                      <div class="box">
-                <span class="material-symbols-outlined">
-                  pending
-                </span>
-                        Requested
-                      </div>
-                    </button>
-                  } @else {
-                    <button mat-flat-button id="confirmButton" class="button">Confirm</button>
-                    <button mat-stroked-button class="button">Delete</button>
-
-                  }
-
-                } @else {
-                  <button class="btnProfile" mat-stroked-button>
-                    <div class="box">
-              <span class="material-symbols-outlined">
-                person_check
-              </span>
-                      Friends
-                    </div>
-                  </button>
-                }
-
-              </div>
-            </mat-card-content>
+            <!--            {{ profile.uid }}-->
+            {{ profile.bio }}
+            <app-friend-card-search [profile]="profile"></app-friend-card-search>
           }
-
-
         </mat-card>
         <div class="post">
         </div>
@@ -75,87 +33,9 @@
           <app-post [postUser]="post"></app-post>
         }
       </div>
-      
+
     }
     <div class="right">
-
     </div>
   </div>
-
 </div>
-
-<!--<app-navbar></app-navbar>-->
-<!--<div class="container">-->
-<!--  <router-outlet></router-outlet>-->
-<!--  <div class="body">-->
-<!--    <div class="search-result">-->
-<!--      <div>-->
-<!--        <button id="backButton" (click)="goBack()" mat-fab>-->
-<!--          <mat-icon>arrow_back</mat-icon>-->
-<!--        </button>-->
-<!--      </div>-->
-<!--      <div class="everyone">-->
-<!--        <h4>Everyone</h4>-->
-<!--      </div>-->
-<!--      <mat-card class="user-suggestions">-->
-<!--        <mat-card-content>-->
-<!--          <div *ngFor="let user of userResults" class="user-item">-->
-<!--            <div class="user-info">-->
-<!--              <img [src]="user.avatarUrl" [alt]="user.name" class="user-avatar">-->
-<!--              <div class="user-details">-->
-<!--                <div class="user-name">{{ user.name }}</div>-->
-<!--                <div class="mutual-friends">{{ user.mutualFriends }} mutual friends</div>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--            <button mat-flat-button class="add-friend-button">-->
-<!--              <mat-icon>person_add_outlined</mat-icon>-->
-<!--              Add friend</button>-->
-<!--          </div>-->
-<!--        </mat-card-content>-->
-<!--      </mat-card>-->
-<!--      <div class="post">-->
-<!--        <h4>Related post</h4>-->
-<!--      </div>-->
-<!--      <app-post>-->
-
-<!--      </app-post>-->
-<!--    </div>-->
-<!--  </div>-->
-<!--</div>-->
-
-<!--&lt;!&ndash;<app-navbar> </app-navbar>&ndash;&gt;-->
-<!--&lt;!&ndash;<div class="container">&ndash;&gt;-->
-<!--&lt;!&ndash;  <router-outlet></router-outlet>&ndash;&gt;-->
-<!--&lt;!&ndash;  <div class="body">&ndash;&gt;-->
-<!--&lt;!&ndash;    <div class="search-result">&ndash;&gt;-->
-<!--&lt;!&ndash;      <div>&ndash;&gt;-->
-<!--&lt;!&ndash;        <button id="backButton" (click)="goBack()" mat-fab>&ndash;&gt;-->
-<!--&lt;!&ndash;          <mat-icon>arrow_back</mat-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;        </button>&ndash;&gt;-->
-<!--&lt;!&ndash;      </div>&ndash;&gt;-->
-<!--&lt;!&ndash;      <div class="everyone">&ndash;&gt;-->
-<!--&lt;!&ndash;        <h4>Everyone</h4>&ndash;&gt;-->
-<!--&lt;!&ndash;      </div>&ndash;&gt;-->
-<!--&lt;!&ndash;      <mat-card class="user-suggestions">&ndash;&gt;-->
-<!--&lt;!&ndash;        <mat-card-content>&ndash;&gt;-->
-<!--&lt;!&ndash;          <div *ngFor="let user of userResults" class="user-item">&ndash;&gt;-->
-<!--&lt;!&ndash;            <div class="user-info">&ndash;&gt;-->
-<!--&lt;!&ndash;              <img [src]="user.avatarUrl" [alt]="user.name" class="user-avatar">&ndash;&gt;-->
-<!--&lt;!&ndash;              <div class="user-details">&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="user-name">{{ user.name }}</div>&ndash;&gt;-->
-<!--&lt;!&ndash;                <div class="mutual-friends">{{ user.mutualFriends }} mutual friends</div>&ndash;&gt;-->
-<!--&lt;!&ndash;              </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            </div>&ndash;&gt;-->
-<!--&lt;!&ndash;            <button mat-flat-button class="add-friend-button">&ndash;&gt;-->
-<!--&lt;!&ndash;              <mat-icon>person_add_outlined</mat-icon>&ndash;&gt;-->
-<!--&lt;!&ndash;              Add friend</button>&ndash;&gt;-->
-<!--&lt;!&ndash;          </div>&ndash;&gt;-->
-<!--&lt;!&ndash;        </mat-card-content>&ndash;&gt;-->
-<!--&lt;!&ndash;      </mat-card>&ndash;&gt;-->
-<!--&lt;!&ndash;      <div class="post">&ndash;&gt;-->
-<!--&lt;!&ndash;        <h4>Related post</h4>&ndash;&gt;-->
-<!--&lt;!&ndash;      </div>&ndash;&gt;-->
-<!--&lt;!&ndash;      <app-post> </app-post>&ndash;&gt;-->
-<!--&lt;!&ndash;    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;  </div>&ndash;&gt;-->
-<!--&lt;!&ndash;</div>&ndash;&gt;-->

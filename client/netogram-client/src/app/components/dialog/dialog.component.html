@@ -10,8 +10,8 @@
           <div class="username">{{ (profileMine$ | async)?.userName }}</div>
         </div>
         <div>
-          <div class="button-close">
-            <mat-icon id="closeIcon" (click)="onNoClick()">close</mat-icon>
+          <div class="button-close" (click)="onNoClick()">
+            <mat-icon id="closeIcon">close</mat-icon>
           </div>
         </div>
       </div>
@@ -61,10 +61,17 @@
 
         </div>
       </div>
-      <div class="button-share">
-        <button (click)="onPost()" mat-button class="share-btn">Share</button>
+      @if (isCreateLoading$ | async) {
+        <div class="loading-overlay">
+          <mat-spinner [diameter]="32" class="loading-spinner"></mat-spinner>
+        </div>
+      } @else {
+        <div class="button-share">
+          <button (click)="onPost()" mat-button class="share-btn">Share</button>
 
-      </div>
+        </div>
+      }
+
       <input #fileInput type="file" (change)="onFileSelected($event)" style="display: none;"/>
     </div>
   </div>
